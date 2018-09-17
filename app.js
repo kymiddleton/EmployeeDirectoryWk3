@@ -1,139 +1,84 @@
-const employeeList = [
-  {
-    name: 'Jan',
-    officeNum: 1,
-    phoneNum: '(222) 222-2222'
-  },
-  {
-    name: 'Juan',
-    officeNum: 304,
-    phoneNum: '(489) 789-8789'
-  },
-  {
-    name: 'Margie',
-    officeNum: 789,
-    phoneNum: '(789) 789-7897'
-  },
-  {
-    name: 'Sara',
-    officeNum: 32,
-    phoneNum: '(222) 789-4654'
-  },
-  {
-    name: 'Tyrell',
-    officeNum: 3,
-    phoneNum: '(566) 621-0452'
-  },
-  {
-    name: 'Tasha',
-    officeNum: 213,
-    phoneNum: '(789) 766-5675'
-  },
-  {
-    name: 'Ty',
-    officeNum: 211,
-    phoneNum: '(789) 766-7865'
-  },
-  {
-    name: 'Sarah',
-    officeNum: 345,
-    phoneNum: '(222) 789-5231'
-  }
-];
+const state = {
+  employeeList: [
+    {
+      name: 'Jan',
+      officeNum: 1,
+      phoneNum: '222-222-2222'
+    },
+    {
+      name: 'Juan',
+      officeNum: 304,
+      phoneNum: '489-789-8789'
+    },
+    {
+      name: 'Margie',
+      officeNum: 789,
+      phoneNum: '789-789-7897'
+    },
+    {
+      name: 'Sara',
+      officeNum: 32,
+      phoneNum: '222-789-4654'
+    },
+    {
+      name: 'Tyrell',
+      officeNum: 3,
+      phoneNum: '566-621-0452'
+    },
+    {
+      name: 'Tasha',
+      officeNum: 213,
+      phoneNum: '789-766-5675'
+    },
+    {
+      name: 'Ty',
+      officeNum: 211,
+      phoneNum: '789-766-7865'
+    },
+    {
+      name: 'Sarah',
+      officeNum: 345,
+      phoneNum: '222-789-5231'
+    }
+  ]
+};
 
-// let command = '';
-
-const employees = $('#outputArea');
-
-const showInput = function () {
-  $('form').addClass('show');
-}
-
-const hideInput = function () {
-  $('form').removeClass('show');
-}
-
-const addField = function (fieldID) {
-  $('form').append(`<div>${"<input id=" + fieldID + ">"}</div>`);
-  // $('form').append(`<div>${"<input id='input1'>"}</div>`);
-}
-
-const resetFields = function () {
-  $('form').empty();
-  $('form').append(`<div>${"<input id='input'><a href='#' onclick='' id='button'></a>"}</div>`);
-}
-
-const printEmployee = function (i) {
-  employees.append(`<div>${"Name: " + employeeList[i].name + " / Office: " + employeeList[i].officeNum + " / Phone: " + employeeList[i].phoneNum}</div>`);
-  // render("Name: " + employeeList[i].name + " / Office: " + employeeList[i].officeNum + " / Phone: " + employeeList[i].phoneNum);
-  return true;
-}
-
-const printList = function () {
-  employees.empty(); //Clear the display area
-  $('#print').on('click', hideInput()); //Hide the input box and button
-  for (i = 0; i < employeeList.length; i++) {
-    printEmployee(i);
-  }
-  return true;
-}
-
+//Functions that iterate through the arrays
 const findEmployee = function (startIndex, employeeName) {
-  for (i = startIndex; i < employeeList.length; i++) {
-    if (employeeList[i].name.toLowerCase().includes(employeeName.toLowerCase())) {
+  for (i = startIndex; i < state.employeeList.length; i++) {
+    if (state.employeeList[i].name.toLowerCase().includes(employeeName.toLowerCase())) {
       return i;
     }
   }
   return -1;
 }
 
-const verify = function () {
-  employees.empty();
-  // $('#verify').on('click', showInput());
-  // $('#button').val('Verify');
-
-  const employeeName = document.getElementById("input").value;
-  const index = findEmployee(0, employeeName);
-
-  if (index > -1) {
-    employees.append("Employee Found");
-  } else { employees.append("Employee NOT Found"); }
-  return true;
-}
-
 const lookup = function () {
-  employees.empty();
+  outputDiv.empty();
   let index = 0;
   const employeeName = document.getElementById("input").value;
-  // const employeeName = prompt('enter employee name');
   index = findEmployee(0, employeeName);
   if (index > -1) {
-    printEmployee(index);
-  } else { employees.append("Employee NOT Found"); }
-  return true;
+    outputDiv.append(`<p>${employeeList[index].name}</p><p>${employeeList[index].officeNum}</p>`)
+  } else { outputDiv.append("Employee NOT Found"); }
 }
 
 const contains = function () {
-  employees.empty();
+  outputDiv.empty();
   let index = 0;
   const toFind = document.getElementById("input").value;
-  // const toFind = prompt('enter partial employee name');
   while (index > -1) {
     index = findEmployee(index, toFind);
     printEmployee(index);
     index++;
   }
-  return true;
 }
 
 const update = function () {
-  employees.empty();
+  outputDiv.empty();
   const employeeName = document.getElementById("input").value;
-  // const employeeName = prompt('enter employee name');
   const field = document.getElementById("command").value;
-  // const field = prompt('enter field to update (name, office, phone)');
   const newValue = document.getElementById("input2").value;
-  // const newValue = prompt('enter new value for ' + field);
   index = findEmployee(0, employeeName);
   if (field === "name") {
     employeeList[index].name = newValue;
@@ -145,217 +90,183 @@ const update = function () {
     employees.append("Invalid Command");
   }
   printEmployee(index);
-  return true;
 }
 
-const addEmployee = function () {
-  employees.empty();
+const add = function () {
+  outputDiv.empty();
   const name = document.getElementById("input").value;
-  // const name = prompt('enter employee name');
   const officeNum = document.getElementById("input2").value;
-  // const officeNum = prompt('enter office number');
   const phoneNum = document.getElementById("input3").value;
-  // const phoneNum = prompt('enter telephone number');
   employeeList.push({ name, officeNum, phoneNum });
   printList();
-  return true;
 }
 
 const deleteEmployee = function () {
-  employees.empty();
+  outputDiv.empty();
   const employeeName = document.getElementById("input").value;
-  // const employeeName = prompt('enter employee name');
   if (index > -1) {
     employeeList.splice(index, 1);
     printList();
-  } else { employees.append("Employee NOT Found"); }
-  return true;
+  } else { outputDiv.append("Employee NOT Found"); }
 }
 
-const phoneLookup = function () {
-  employees.empty();
-
-  // $('#lookup').on('click', showInput());
-  // $('#button').val('Lookup');
-
+const phone = function () {
+  outputDiv.empty();
   const employeeName = document.getElementById("input").value;
-  // const employeeName = prompt('which employee');
   const index = findEmployee(0, employeeName);
   if (index > -1) {
-    employees.append("Phone #: " + employeeList[index].phoneNum);
-  } else { employees.append("Employee NOT Found"); }
-
-  return true;
+    outputDiv.append("Phone #: " + employeeList[index].phoneNum);
+  } else { outputDiv.append("Employee NOT Found"); }
 }
 
-const interpret = function (command) {
+//Switch Statements
+let command = '';
+const outputDiv = $('#content');
+
+const runSubmit = function (e) {
+  let employeeList = state.employeeList;
+  e.preventDefault();
+  let htmlStr = '';
   switch (command) {
     case "print":
-      employees.empty();
-      printList();
+      outputDiv.empty();
+      employeeList.forEach(e => {
+        htmlStr += `<div class="space"><p>Name: ${e.name}</p>`;
+        htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
+        htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
+      });
+      render(htmlStr);
       break;
     case "verify":
-      employees.empty();
-      resetFields();
-      $('#verify').on('click', showInput());
-      $('#button').text('Verify');
-      $('#button').on('click', verify);
+      outputDiv.empty();
+
+      index = state.employeeList.some(function (element) {
+        return element.name.toLowerCase() === $('#input').val().toLowerCase();
+      });
+
+      if (index === true) {
+        htmlStr = '<div class="print"><p>Employee Found</p></div>';
+      } else {
+        htmlStr = '<div class="print"><p>Employee NOT Found</p></div>';
+      }
+      
+      // employeeList.some(employee => employee.name.toLowerCase() === $('#input').val('input').toLowerCase() ? htmlStr = '<div class="print"><p>Employee Found</p></div>' : htmlStr = '<div class="print"><p>Employee NOT Found</p></div>');
+      render(htmlStr);
       break;
     case "lookup":
-      employees.empty();
-      resetFields();
-      $('#lookup').on('click', showInput());
-      $('#button').text('Lookup');
-      $('#button').on('click', lookup);
-      break;
-    case "update":
-      employees.empty();
-      resetFields();
-      addField("command");
-      addField("input2");
-      $('#update').on('click', showInput());
-      $('#button').text('Update');
-      $('#button').on('click', update);
+      outputDiv.empty();
+      console.log('lookup');
+      let match = false
+      employeeList.find(employee => employee.name.toLowerCase() === $('#input').val().toLowerCase() ? match = employee : htmlStr = '<p>Employee Not Found</p>');
+      if (match !== false) {
+        htmlStr += `<div class="print"></> ${match.name} </p>`
+        htmlStr += `<p> ${match.officeNum} </p>`;
+        htmlStr += `<p> ${match.phoneNum} </p>`;
+      }
+      render(htmlStr);
       break;
     case "contains":
-      employees.empty();
-      resetFields();
-      $('#update').on('click', showInput());
-      $('#button').text('Contains');
-      $('#button').on('click', contains);
+      outputDiv.empty();
+      console.log('contains');
+      break;
+    case "update":
+      outputDiv.empty();
+      console.log('udpate');
       break;
     case "add":
-      employees.empty();
-      resetFields();
-      addField("input2");
-      addField("input3");
-      $('#update').on('click', showInput());
-      $('#button').text('Add');
-      $('#button').on('click', addEmployee);
+      outputDiv.empty();
+      console.log('add');
       break;
     case "delete":
-    employees.empty();
-    resetFields();
-    $('#update').on('click', showInput());
-    $('#button').text('Delete');
-    $('#button').on('click', deleteEmployee);
-    break;
+      outputDiv.empty();
+      console.log('delete');
+      break;
     case "phone":
-    employees.empty();
-    resetFields();
-    $('#update').on('click', showInput());
-    $('#button').text('Lookup');
-    $('#button').on('click', phoneLookup);
+      outputDiv.empty();
+      console.log('phone');
+      break;
   }
 }
+//DOM functions
+const hideWelcome = function () { //Works!
+  $('h1').addClass('hide');
+}
+const move = function () { //Works!
+  $('h2').addClass('move');
+}
+const hideInput = function () {
+  $('form').removeClass('hide');
+}
+const showInput = function () {
+  $('form').addClass('show');
+}
+const hidePrint = function () {
+  $('.print').addClass('hide');
+}
+const render = function (htmlStr) {
+  $('#content').html(htmlStr);
+}
 
-// const verifyCommand = function () {
-//   employees.empty();
-//   $('#verify').on('click', showInput());
-//   $('#button').text('Verify');
-//   $('#button').on('click', verify);
-//   return true;
-// }
+/*DO NOT DELETE */ //Call back Functions that power event listeners
+const setPrint = function () { //Works but have to click print 2x!
+  outputDiv.empty();
+  hideWelcome();
+  move();
+  hideInput();
+  showInput();
+  runSubmit(event);
+  command = 'print';
+}
+const setVerify = function () {
+  outputDiv.empty();
+  hideWelcome();
+  move();
+  hideInput();
+  showInput();
+  hidePrint();
+  runSubmit(event);
+  command = 'verify';
+}
+const setLookup = function () {
+  outputDiv.empty();
+  hideWelcome();
+  move();
+  hideInput();
+  showInput();
+  runSubmit(event);
+  command = 'lookup';
+}
+const setContains = function () {
+  outputDiv.empty();
+  command = 'contains';
+}
+const setUpdate = function () {
+  outputDiv.empty();
+  command = 'update';
+}
+const setAdd = function () {
+  outputDiv.empty();
+  command = 'add';
+}
+const setDelete = function () {
+  outputDiv.empty();
+  command = 'delete';
+}
+const setPhone = function () {
+  outputDiv.empty();
+  command = 'phone';
+}
+//Event Listener Callback Functions
+$('#print').on('click', setPrint); //Works!
+$('#verify').on('click', setVerify);
+$('#lookup').on('click', setLookup);
+$('#contains').on('click', setContains);
+$('#update').on('click', setUpdate);
+$('#add').on('click', setAdd);
+$('#delete').on('click', setDelete);
+$('#phone').on('click', setPhone);
+$('#submit').on('click', runSubmit);
 
-// const lookupCommand = function () {
-//   employees.empty();
-//   $('#lookup').on('click', showInput());
-//   $('#button').text('Lookup');
-//   $('#button').on('click', lookup);
-//   return true;
-// }
-
-// const updateCommand = function () {
-//   employees.empty();
-//   $('#update').on('click', showInput());
-//   $('#button').text('Update');
-//   $('#button').on('click', update);
-//   return true;
-// }
-
-// const containsCommand = function () {
-//   employees.empty();
-//   $('#update').on('click', showInput());
-//   $('#button').text('Contains');
-//   $('#button').on('click', contains);
-//   return true;
-// }
-
-// const addCommand = function () {
-//   employees.empty();
-//   $('#update').on('click', showInput());
-//   $('#button').text('Add');
-//   $('#button').on('click', addEmployee);
-//   return true;
-// }
-
-// const deleteCommand = function () {
-//   employees.empty();
-//   $('#update').on('click', showInput());
-//   $('#button').text('Delete');
-//   $('#button').on('click', deleteEmployee);
-//   return true;
-// }
-
-// const phoneCommand = function () {
-//   employees.empty();
-//   $('#update').on('click', showInput());
-//   $('#button').text('Lookup');
-//   $('#button').on('click', phoneLookup);
-//   return true;
-// }
-
-// const runCommand = function (e) {
-//   e.preventDefault();
-//   switch (command) {
-//     case 'print':
-//       let htmlStr = '';
-//       for (let i = 0; i < employeeList.length; i++) {
-//         htmlStr += `<p> ${employeeList[i].name}</p>`;
-//         htmlStr += `<p> ${employeeList[i].officeNum}</p>`;
-//       }
-//       render(htmlStr);
-//       break;
-//     case 'verify':
-//       render('verify');
-//       let userName = $('input').val();
-//       render(employeeList.some(e => e.name.toLowerCase() === userName.toLowerCase()) ? 'yes' : 'no';
-//       break;
-//   }
-// }
-
-// const verify = function () {
-//   command = 'verify'
-//   $('input').addClass('show');
-// }
-
-// const print = function () {
-//   command = 'print';
-//   $('input').removeClass('show');
-// }
-
-// const render = function(html) {
-//   $('#list').html(htmlStr);
-// }
-
-// $('#submit').on('click', runCommand);
-// $('#print').on('click', print);
-
-// const command = prompt("enter command");
-// if (command === "print") {
-//   printList();
-// } else if (command === "Verify") {
-//   verify();
-// } else if (command === "Lookup") {
-//   lookup();
-// } else if (command === "Contains") {
-//   contains();
-// } else if (command === "Update") {
-//   update();
-// } else if (command === "Add") {
-//   addEmployee();
-// } else if (command === "Delete") {
-//   deleteEmployee();
-// } else if (command === "Phone") {
-//   phoneLookup();
-// } else (render("Invalid Command"));
+//1. Add an eventlistener for lookup that runs setLookup 
+//2. at the top somewhere create a function called setLookup and copy paste setVerify
+//3. add the switch
