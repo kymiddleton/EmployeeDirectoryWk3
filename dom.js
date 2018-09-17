@@ -32,6 +32,7 @@ const $ = function (sel) {
   }
 
   const val = function (content) {
+    // console.log(content);
     if (content === undefined) {
       return nodeList[0].value;
     } else {
