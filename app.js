@@ -113,7 +113,7 @@ const runSubmit = function (e) {
       });
       render(html);
       break;
-    case "update":
+    case "update": //Very close to working. Out of time to make changes to input fields. 
       outputDiv.empty();
       index = state.employeeList.findIndex(function (element) {
         return element.name.toLowerCase() === $('#input').val().toLowerCase();
@@ -131,14 +131,11 @@ const runSubmit = function (e) {
           break;
         default:
           htmlStr += `<div class="print" ><p>Invalid Command</p></div>`;
-      }
-      // htmlStr += `<div class="space"><p>Name: ${e.name}</p>`; //"space" refers to CSS .space 
-      // htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
-      // htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
-
-        // console.log(employeeList[index].name+" "+employeeList[index].officeNum+" "+employeeList[index].phoneNum);
+      };
+      htmlStr += `<div class="space"><p>Name: ${e.name}</p>`; //"space" refers to CSS .space 
+      htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
+      htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
       render(htmlStr);
-
       break;
     case "add": //Works!
       outputDiv.empty();
@@ -159,7 +156,7 @@ const runSubmit = function (e) {
       outputDiv.empty();
       index = state.employeeList.findIndex(function (element) {
         return element.name.toLowerCase() === $('#input').val().toLowerCase();
-      }); console.log(index);
+      });
       if (index > -1) {
         employeeList.splice(index, 1);
         employeeList.forEach(e => {
@@ -204,6 +201,9 @@ const hideOffice = function () { //Works!! Hide input field 'office' until neede
 }
 const hidePhone = function () { //Works!! Hide input field 'phone' until needed
   $('#phone').addClass('hide');
+}
+const hideUpdateField = function () { //Should hide input field 'updateField' until needed
+  $('#updateField').addClass('hide');
 }
 const hideInput = function () { //Works!! Hides form 'input' field when 'print' is clicked in nav. 'show' refers to CSS .show
   $('form').addClass('show');
@@ -261,7 +261,7 @@ const setUpdate = function () { //Works!
   hideWelcome(); //Hide welcome page text
   move(); //Move h2 header to top left
   showInput(); //Shows form 'input' field
-  runSubmit(event)
+  runSubmit(event);
   command = 'update';
 }
 const setAdd = function () { //Works!
