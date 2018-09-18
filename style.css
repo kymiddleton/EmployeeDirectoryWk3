@@ -41,6 +41,14 @@ body {
     padding-right: 8px;
 }
 
+.fa {
+    position: absolute;
+    top: 90px;
+    left: 535px;
+    font-size: 18px;
+    color: white;
+}
+
 h3 {
     color: yellow;
     text-align: center;
@@ -97,7 +105,7 @@ h2 {
 }
 
 .space {
-    padding-bottom: 5px;
+    padding-bottom: 15px;
 }
 
 p {
@@ -110,12 +118,42 @@ p {
     padding: 10px 0px 20px 30px;
 }
 
+form {
+    text-align: left;
+    padding-left: 30px;
+}
+
 #input {
+    padding-right: 220px;
+    height: 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#print {
+    padding-bottom: 5px;
+    /* margin-bottom: 10px;  */
+}
+
+#office {
+    padding-right: 220px;
+    height: 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#phone {
     padding-right: 220px;
     height: 25px;
     border-radius: 5px;
 }
 
+#submit {
+    padding-right: 15px;
+    margin-left: 370px;
+    background-color: transparent;
+}
+
  #content p:nth-child(3) {
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }

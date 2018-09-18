@@ -42,7 +42,6 @@ const state = {
     }
   ]
 };
-
 //Functions that iterate through the arrays
 const findEmployee = function (startIndex, employeeName) {
   for (i = startIndex; i < state.employeeList.length; i++) {
@@ -53,207 +52,244 @@ const findEmployee = function (startIndex, employeeName) {
   return -1;
 }
 
-const lookup = function () {
-  outputDiv.empty();
-  let index = 0;
-  const employeeName = document.getElementById("input").value;
-  index = findEmployee(0, employeeName);
-  if (index > -1) {
-    outputDiv.append(`<p>${employeeList[index].name}</p><p>${employeeList[index].officeNum}</p>`)
-  } else { outputDiv.append("Employee NOT Found"); }
-}
-
-const contains = function () {
-  outputDiv.empty();
-  let index = 0;
-  const toFind = document.getElementById("input").value;
-  while (index > -1) {
-    index = findEmployee(index, toFind);
-    printEmployee(index);
-    index++;
-  }
-}
-
-const update = function () {
-  outputDiv.empty();
-  const employeeName = document.getElementById("input").value;
-  const field = document.getElementById("command").value;
-  const newValue = document.getElementById("input2").value;
-  index = findEmployee(0, employeeName);
-  if (field === "name") {
-    employeeList[index].name = newValue;
-  } else if (field === "office") {
-    employeeList[index].officeNum = newValue;
-  } else if (field === "phone") {
-    employeeList[index].phoneNum = newValue;
-  } else {
-    employees.append("Invalid Command");
-  }
-  printEmployee(index);
-}
-
-const add = function () {
-  outputDiv.empty();
-  const name = document.getElementById("input").value;
-  const officeNum = document.getElementById("input2").value;
-  const phoneNum = document.getElementById("input3").value;
-  employeeList.push({ name, officeNum, phoneNum });
-  printList();
-}
-
-const deleteEmployee = function () {
-  outputDiv.empty();
-  const employeeName = document.getElementById("input").value;
-  if (index > -1) {
-    employeeList.splice(index, 1);
-    printList();
-  } else { outputDiv.append("Employee NOT Found"); }
-}
-
-const phone = function () {
-  outputDiv.empty();
-  const employeeName = document.getElementById("input").value;
-  const index = findEmployee(0, employeeName);
-  if (index > -1) {
-    outputDiv.append("Phone #: " + employeeList[index].phoneNum);
-  } else { outputDiv.append("Employee NOT Found"); }
-}
-
 //Switch Statements
 let command = '';
-const outputDiv = $('#content');
+const outputDiv = $('#content');  //#content refers to HTML <div id="content"></div>
 
 const runSubmit = function (e) {
   let employeeList = state.employeeList;
   e.preventDefault();
   let htmlStr = '';
   switch (command) {
-    case "print":
+    case "print": //Works!
       outputDiv.empty();
       employeeList.forEach(e => {
-        htmlStr += `<div class="space"><p>Name: ${e.name}</p>`;
+        htmlStr += `<div class="space"><p>Name: ${e.name}</p>`; //"space" refers to CSS .space 
         htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
         htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
       });
       render(htmlStr);
       break;
-    case "verify":
+    case "verify": //Works!
       outputDiv.empty();
-
       index = state.employeeList.some(function (element) {
         return element.name.toLowerCase() === $('#input').val().toLowerCase();
       });
-
       if (index === true) {
         htmlStr = '<div class="print"><p>Employee Found</p></div>';
       } else {
         htmlStr = '<div class="print"><p>Employee NOT Found</p></div>';
       }
-      
-      // employeeList.some(employee => employee.name.toLowerCase() === $('#input').val('input').toLowerCase() ? htmlStr = '<div class="print"><p>Employee Found</p></div>' : htmlStr = '<div class="print"><p>Employee NOT Found</p></div>');
       render(htmlStr);
       break;
-    case "lookup":
+    case "lookup": //Works!
       outputDiv.empty();
-      console.log('lookup');
       let match = false
-      employeeList.find(employee => employee.name.toLowerCase() === $('#input').val().toLowerCase() ? match = employee : htmlStr = '<p>Employee Not Found</p>');
-      if (match !== false) {
-        htmlStr += `<div class="print"></> ${match.name} </p>`
-        htmlStr += `<p> ${match.officeNum} </p>`;
-        htmlStr += `<p> ${match.phoneNum} </p>`;
+      // let htmlStr = "";
+      employeeList.forEach(e => {
+        if (e.name.toLowerCase() === $('#input').val().toLowerCase()) {
+          htmlStr += `<div class="space"><p>Name: ${e.name}</p>`;
+          htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
+          htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
+          match = true;
+        }
+      });
+      if (match === false) {
+        htmlStr = '<p>Employee Not Found</p>';
       }
       render(htmlStr);
       break;
-    case "contains":
+    case "contains": //Works!
       outputDiv.empty();
       console.log('contains');
+      let inputValue = $('#input').val().toLowerCase();
+      let html = "";
+      employeeList.forEach(e => {
+        if (e.name.toLowerCase().includes(inputValue)) {
+          html += `<div class="print"><p>Name: ${e.name}</p>`;
+          html += `<p>Office Number: ${e.officeNum}</p>`;
+          html += `<p>Phone Number: ${e.phoneNum}</p></div>`;
+        }
+      });
+      render(html);
       break;
     case "update":
       outputDiv.empty();
-      console.log('udpate');
+      index = state.employeeList.findIndex(function (element) {
+        return element.name.toLowerCase() === $('#input').val().toLowerCase();
+      });
+      updateValue = $('#phone').val();
+      switch ($('#office').val().toLowerCase()) {
+        case "name":
+          employeeList[index].name = updateValue;
+          break;
+        case "office":
+          employeeList[index].officeNum = updateValue;
+          break;
+        case "phone":
+          employeeList[index].phoneNum = updateValue;
+          break;
+        default:
+          htmlStr += `<div class="print" ><p>Invalid Command</p></div>`;
+      }
+      // htmlStr += `<div class="space"><p>Name: ${e.name}</p>`; //"space" refers to CSS .space 
+      // htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
+      // htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
+
+        // console.log(employeeList[index].name+" "+employeeList[index].officeNum+" "+employeeList[index].phoneNum);
+      render(htmlStr);
+
       break;
-    case "add":
+    case "add": //Works!
       outputDiv.empty();
       console.log('add');
+      const name = $('#input').val();
+      const officeNum = $('#office').val();
+      const phoneNum = $('#phone').val();
+
+      employeeList.push({ name, officeNum, phoneNum });
+      employeeList.forEach(e => {
+        htmlStr += `<div class="space"><p>Name: ${e.name}</p>`; //"space" refers to CSS .space 
+        htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
+        htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
+      });
+      render(htmlStr);
       break;
-    case "delete":
+    case "delete": //Works!
       outputDiv.empty();
-      console.log('delete');
+      index = state.employeeList.findIndex(function (element) {
+        return element.name.toLowerCase() === $('#input').val().toLowerCase();
+      }); console.log(index);
+      if (index > -1) {
+        employeeList.splice(index, 1);
+        employeeList.forEach(e => {
+          htmlStr += `<div class="space"><p>Name: ${e.name}</p>`; //"space" refers to CSS .space 
+          htmlStr += `<p>Office Number: ${e.officeNum}</p>`;
+          htmlStr += `<p>Phone Number: ${e.phoneNum}</p></div>`;
+        });
+      } else { outputDiv.append("Employee NOT Found"); }
+      render(htmlStr);
       break;
-    case "phone":
+    case "phone": //Works!
       outputDiv.empty();
-      console.log('phone');
+      let matchPhone = false;
+      employeeList.forEach(e => {
+        if (e.name.toLowerCase() === $('#input').val().toLowerCase()) {
+          htmlStr += `<div class="space"><p>Phone Number: ${e.phoneNum}</p></div>`;
+          matchPhone = true;
+        }
+      });
+      if (matchPhone === false) {
+        htmlStr = '<p>Employee Not Found</p>';
+      }
+      render(htmlStr);
       break;
   }
 }
+
+
+
 //DOM functions
-const hideWelcome = function () { //Works!
+const hideWelcome = function () { //Works! Hides h1 when side bar nav items clicked
   $('h1').addClass('hide');
 }
-const move = function () { //Works!
+const move = function () { //Works!  Moves h2 header in correct place when side bar nav items clicked
   $('h2').addClass('move');
 }
-const hideInput = function () {
+const showInput = function () {  //Works!! Displays form 'input' field 
   $('form').removeClass('hide');
 }
-const showInput = function () {
+const hideOffice = function () { //Works!! Hide input field 'office' until needed
+  $('#office').addClass('hide');
+}
+const hidePhone = function () { //Works!! Hide input field 'phone' until needed
+  $('#phone').addClass('hide');
+}
+const hideInput = function () { //Works!! Hides form 'input' field when 'print' is clicked in nav. 'show' refers to CSS .show
   $('form').addClass('show');
 }
 const hidePrint = function () {
   $('.print').addClass('hide');
 }
-const render = function (htmlStr) {
+const render = function (htmlStr) { //Works!
   $('#content').html(htmlStr);
 }
 
 /*DO NOT DELETE */ //Call back Functions that power event listeners
-const setPrint = function () { //Works but have to click print 2x!
+const setPrint = function () { //Works!
   outputDiv.empty();
-  hideWelcome();
-  move();
-  hideInput();
-  showInput();
-  runSubmit(event);
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  hideOffice(); //Hide office input field
+  hidePhone(); //Hide phone input field
   command = 'print';
+  runSubmit(event);
 }
-const setVerify = function () {
+const setVerify = function () { //Works!
   outputDiv.empty();
-  hideWelcome();
-  move();
-  hideInput();
-  showInput();
-  hidePrint();
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  hideOffice(); //Hide office input field
+  hidePhone(); //Hide phone input field
   runSubmit(event);
   command = 'verify';
 }
-const setLookup = function () {
+const setLookup = function () { //Works!
   outputDiv.empty();
-  hideWelcome();
-  move();
-  hideInput();
-  showInput();
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  hideOffice(); //Hide office input field
+  hidePhone(); //Hide phone input field
   runSubmit(event);
   command = 'lookup';
 }
-const setContains = function () {
+const setContains = function () { //Works!
   outputDiv.empty();
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  hideOffice(); //Hide office input field
+  hidePhone(); //Hide phone input field
+  runSubmit(event);
   command = 'contains';
 }
-const setUpdate = function () {
+const setUpdate = function () { //Works!
   outputDiv.empty();
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  runSubmit(event)
   command = 'update';
 }
-const setAdd = function () {
+const setAdd = function () { //Works!
   outputDiv.empty();
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  runSubmit(event);
   command = 'add';
 }
-const setDelete = function () {
+const setDelete = function () { //Works!
   outputDiv.empty();
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  hideOffice(); //Hide office input field
+  hidePhone(); //Hide phone input field
+  runSubmit(event)
   command = 'delete';
 }
-const setPhone = function () {
+const setPhone = function () { //Works!
   outputDiv.empty();
+  hideWelcome(); //Hide welcome page text
+  move(); //Move h2 header to top left
+  showInput(); //Shows form 'input' field
+  hideOffice(); //Hide office input field
+  hidePhone(); //Hide phone input field
+  runSubmit(event)
   command = 'phone';
 }
 //Event Listener Callback Functions
