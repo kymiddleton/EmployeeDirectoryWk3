@@ -1,57 +1,4 @@
-const employeeList = [
-    {
-      name: 'Jan',
-      officeNum: 1,
-      phoneNum: '222-222-2222'
-    },
-    {
-      name: 'Juan',
-      officeNum: 304,
-      phoneNum: '489-789-8789'
-    },
-    {
-      name: 'Margie',
-      officeNum: 789,
-      phoneNum: '789-789-7897'
-    },
-    {
-      name: 'Sara',
-      officeNum: 32,
-      phoneNum: '222-789-4654'
-    },
-    {
-      name: 'Tyrell',
-      officeNum: 3,
-      phoneNum: '566-621-0452'
-    },
-    {
-      name: 'Tasha',
-      officeNum: 213,
-      phoneNum: '789-766-5675'
-    },
-    {
-      name: 'Ty',
-      officeNum: 211,
-      phoneNum: '789-766-7865'
-    },
-    {
-      name: 'Sarah',
-      officeNum: 345,
-      phoneNum: '222-789-5231'
-    }
-  ];
-  
-  // let command = '';
-  
-  const employees = $('#outputArea');
-  
-  const showInput = function () {
-    $('form').addClass('show');
-  }
-  
-  const hideInput = function () {
-    $('form').removeClass('show');
-  }
+
   
   const addField = function (fieldID) {
     $('form').append(`<div>${"<input id=" + fieldID + ">"}</div>`);
@@ -66,19 +13,8 @@ const employeeList = [
   const printEmployee = function (i) {
     employees.append(`<div>${"Name: " + employeeList[i].name + " / Office: " + employeeList[i].officeNum + " / Phone: " + employeeList[i].phoneNum}</div>`);
     // render("Name: " + employeeList[i].name + " / Office: " + employeeList[i].officeNum + " / Phone: " + employeeList[i].phoneNum);
-    return true;
   }
   
-  
-     //Clear the display area
-    $('#print').on('click',function(){
-          employees.empty();
-          employeeList.forEach( e => {
-              render("Name: " + e.name, "Office Number: " + e.officeNum, "Phone: " + e.phoneNum);
-              // render(e.name, e.officeNum, e.phoneNum);
-          });
-    }); 
-    
     
   const findEmployee = function (startIndex, employeeName) {
     for (i = startIndex; i < employeeList.length; i++) {
@@ -109,14 +45,10 @@ const employeeList = [
   //by getting id of input $(id).val();
   
   });
+
   const verify = function () {
-    
-    // $('#verify').on('click', showInput());
-    // $('#button').val('Verify');
-  
     const employeeName = document.getElementById("input").value;
     const index = findEmployee(0, employeeName);
-  
     if (index > -1) {
       employees.append("Employee Found");
     } else { employees.append("Employee NOT Found"); }
@@ -381,3 +313,12 @@ const employeeList = [
   // } else if (command === "Phone") {
   //   phoneLookup();
   // } else (render("Invalid Command"));
+
+
+
+  // employeeList.some(employee => employee.name.toLowerCase() === $('#input').val('input').toLowerCase() ? htmlStr = '<div class="print"><p>Employee Found</p></div>' : htmlStr = '<div class="print"><p>Employee NOT Found</p></div>');
+
+
+  htmlStr += `<p class="print">${e.name} </p>`
+          htmlStr += `<p> ${e.officeNum} </p>`;
+          htmlStr += `<p> ${e.phoneNum} </p>`;
