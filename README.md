@@ -1,8 +1,7 @@
-# Instructions
+# Instructions: UI for Employee List Redesign
 
-Create a program that does all of the following:
-
-*Hint:* Flowchart 1 step at a time. Implement that step and when it works properly, flowchart the next.
+## Phase One:
+Create a program (and flow chart each step) that does all of the following:
 
 * Prompt the user to input a command, then do the following:
 
@@ -44,6 +43,23 @@ Create a program that does all of the following:
   * prompt the user for a name
   * print the `phoneNum` for the name provided by user. 
   
+## Phase Two - Redesign UI for Employee List
 
+Review phase one and revise by cleaning up the UI and code.
 
+## Match the new design
 
+Match the designs to look like the following images:
+
+![Home Page Desktop](home.png)
+
+![General Page Desktop](page.png)
+
+Use [Font Awesome](https://fontawesome.com/) for the icons.
+
+### Code Cleanup
+
+- Replace all for loops with `forEach`, `map`, `filter`, `find`, `some`, `every`, `findIndex`, or `includes`
+- Use a switch statement for the primary logic
+- All rendering takes place in a render function
+- No global variables other than functions and state (so command and employeeList should be on state).
