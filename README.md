@@ -51,9 +51,9 @@ Review phase one and revise by cleaning up the UI and code.
 
 Match the designs to look like the following images:
 
-![Home Page Desktop](home.png)
+![Home Page Desktop](images/home.png)
 
-![General Page Desktop](page.png)
+![General Page Desktop](images/page.png)
 
 Use [Font Awesome](https://fontawesome.com/) for the icons.
 
